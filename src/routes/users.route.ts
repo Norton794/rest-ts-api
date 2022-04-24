@@ -8,4 +8,8 @@ usersRoute.get("/users", (req: Request, res: Response, next: NextFunction) => {
 });
 
 
+usersRoute.get("/users/:uuid", (req: Request, res: Response, next: NextFunction) => {
+    const {uuid} = req.params
+    res.status(200).json({uuid})
+});
 export default usersRoute
