@@ -6,13 +6,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts"
   },
   "keywords": [],
   "author": "Norton",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "@types/node": "^17.0.25",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
   }
 }
