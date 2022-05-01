@@ -1,6 +1,6 @@
 import db from "../db";
 import User from "../models/user.model";
-import config from 'config';
+import config from "config";
 
 class UserRepository {
   async findAllUsers(): Promise<User[]> {
@@ -23,14 +23,38 @@ class UserRepository {
         username, password
         ) 
         VALUES ($1, crypt($2, $3))
-        RETURNING uuid`
+        RETURNING uuid`;
 
-    const values = [user.username, user.password, config.get('db.salt')];
+    const values = [user.username, user.password, config.get("db.salt")];
 
-    const {rows} = await db.query<{uuid: string}>(query, values);
+    const { rows } = await db.query<{ uuid: string }>(query, values);
     const [newUser] = rows;
-    return newUser.uuid || ''
+    return newUser.uuid || "";
   }
+
+  async update(user: User): Promise<void> {
+    const query = `UPDATE application_user 
+        SET
+            username = $1, 
+            password= crypt($2, $3)
+        WHERE uuid = $4`;
+
+    const values = [
+      user.username,
+      user.password,
+      config.get("db.salt"),
+      user.uuid,
+    ];
+
+    await db.query(query, values);
+  }
+
+
+  async delete(uuid: string): Promise<void> {
+      const query = `DELETE FROM application_user WHERE uuid = $1`
+      await db.query(query, [uuid]);
+  }
+
 }
 
 export default new UserRepository();
