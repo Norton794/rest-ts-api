@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
-import usersRoute from "./routes/users.route.ts";
-import statusRoute from "./routes/status.route.ts";
+import usersRoute from "./routes/users.route";
+import statusRoute from "./routes/status.route";
 const app = express();
 
 app.use(express.json());
